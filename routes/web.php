@@ -17,15 +17,16 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'api'], function () use ($router) {
+$router->group(['prefix' => 'auth'], function () use ($router) {
     $router->post('/login', 'AuthController@login');
     $router->post('/logout', 'AuthController@logout');
+    $router->post('/register', 'AuthController@register');
 });
 
 $router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
     $router->get('/product', 'ProductController@all');
     $router->get('/product/{id}', 'ProductController@get');
     $router->post('/product', 'ProductController@create');
-    $router->put('product', 'ProductController@update');
-    $router->delete('product', 'ProductController@delete');
+    $router->put('/product', 'ProductController@update');
+    $router->delete('/product', 'ProductController@delete');
 });
